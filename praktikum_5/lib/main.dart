@@ -13,6 +13,8 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -106,7 +108,7 @@ class _MyAppState extends State<MyApp> {
 class NewScreen extends StatelessWidget {
   final String payload;
 
-  const NewScreen({Key? key, required this.payload}) : super(key: key);
+  const NewScreen({super.key, required this.payload});
 
   @override
   Widget build(BuildContext context) {
