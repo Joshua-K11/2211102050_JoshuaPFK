@@ -72,6 +72,6 @@ echo "<br>";
 
 <?php 
 //Array
-$hewan = ["Kucing", "Anjing", "Burung"]; echo $hewan[0]; // Output: Kucing
+$hewan = ["Kucing", "Anjingg", "Burung"]; echo $hewan[0]; // Output: Kucing
 echo "<br>";
 ?>
