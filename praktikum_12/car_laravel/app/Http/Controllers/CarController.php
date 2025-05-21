@@ -50,36 +50,48 @@ class CarController extends Controller
     
         return redirect()->route('car.index')->with('message', 'Car added successfully!');
     }
+ // Show detail mobil
+public function show($id)
+{
+    $car = Car::with('merk')->findOrFail($id);
+    return view('car.show', compact('car'));
+}
  
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+// Form edit mobil
+public function edit($id)
+{
+    $car = Car::findOrFail($id);
+    $merks = Merk::all();
+    return view('car.edit', compact('car', 'merks'));
+}
+ 
+// Proses update mobil
+public function update(Request $request, $id)
+{
+    $car = Car::findOrFail($id);
+ 
+    $data = $request->validate([
+        'merk_id' => 'required|exists:merks,id',
+        'model' => 'required',
+        'color' => 'required',
+        'year' => 'required|numeric',
+        'price' => 'required|numeric',
+        'image' => 'nullable|image|mimes:jpg,jpeg,png'
+    ]);
+ 
+    if ($request->hasFile('image')) {
+        $data['image'] = $request->file('image')->store('car_images', 'public');
     }
  
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+    $car->update($data);
+    return redirect()->route('car.index')->with('message', 'Car updated successfully!');
+}
  
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
- 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+// Hapus data mobil
+public function destroy($id)
+{
+    $car = Car::findOrFail($id);
+    $car->delete();
+    return redirect()->route('car.index')->with('message', 'Car deleted successfully!');
+}
 }
